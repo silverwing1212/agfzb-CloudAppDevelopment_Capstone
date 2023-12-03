@@ -6,19 +6,23 @@ from .models import CarModel, CarMake
 # Register your models here.
 
 # CarModelInline class
-class CarModelInline(admin.StackedInline):
+
+class CarModelInline(admin.TabularInline):
     model = CarModel
-    extra = 10
+    # extra = 10
 
 # CarModelAdmin class
 class CarModelAdmin(admin.ModelAdmin):
+    #typeChoices = ['Sedan', 'SUV', 'Wagon', 'Crossover', 'Minivan']
     model = CarModel
-    inlines = [CarModelInline]
-    extra = 10
+    fields = ('type', )
+    list_display = ('type', )
+    # extra = 10
 
 # CarMakeAdmin class with CarModelInline
 class CarMakeAdmin(admin.ModelAdmin):
     model = CarMake
+    inlines = [CarModelInline]
 
 # Register models here
 admin.site.register(CarModel, CarModelAdmin)
