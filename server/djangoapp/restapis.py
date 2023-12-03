@@ -68,7 +68,10 @@ def get_dealers_from_cf(url, **kwargs):
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
 def get_dealer_reviews_from_cf(url, dealerId=dealerId):
-    # Contrive URL
+    # TODO (XXX):
+    # Contrive CF GET REQUEST URL
+    # Make Cloud Functions + Test Them on Postman
+    # Call IBM
     return get_request(url, dealerId=dealerId)
 
 
