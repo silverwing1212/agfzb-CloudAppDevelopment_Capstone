@@ -87,27 +87,21 @@ def registration_request(request):
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 def get_dealerships(request):
-    if request.method == "GET":
-        context = {}
-        # Concat all dealer's short name
-        # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        # Return a list of dealer short name
-        url = "https://us-east.functions.cloud.ibm.com/api/v1/namespaces/046716ff-e42a-4d60-a2f6-18db643765ba/actions/api/dealership?blocking=true"
-        dealerships = get_dealers_from_cf(url)
-        context["dealership_list"] = dealerships
-        try:
-            url = "https://us-east.functions.cloud.ibm.com/api/v1/namespaces/046716ff-e42a-4d60-a2f6-18db643765ba/actions/api/dealership?blocking=true"
-            dealerships = get_dealers_from_cf(url)
-            context["dealership_list"] = dealerships
-        except:
-            # Gives a default list if error occurs
-            context["dealership_list"] = [
-                { "id": "0", "full_name": "Adam Zachary", "city": "Austin", "address": "X", "zip": 12345, "state": "Texas"},
-                { "id": "1", "full_name": "Bianca Yuo", "city": "NYC", "address": "X", "zip": 12345, "state": "New York"},
-                { "id": "2", "full_name": "Caesar Xi", "city": "NYC", "address": "X", "zip": 12345, "state": "Texas"},
-                { "id": "3", "full_name": "Diana Wes", "city": "Utah", "address": "X", "zip": 12345, "state": "Utah"},
-            ]
-        return render(request, 'djangoapp/index.html', context)
+    context = {}
+    # Concat all dealer's short name
+    # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+    # Return a list of dealer short name
+    url = "https://us-east.functions.cloud.ibm.com/api/v1/namespaces/046716ff-e42a-4d60-a2f6-18db643765ba/actions/api/dealership?blocking=true"
+    dealerships = get_dealers_from_cf(url)
+    context["dealership_list"] = dealerships
+    # Gives a default list if error occurs
+    #context["dealership_list"] = [
+    #    { "id": "0", "full_name": "Adam Zachary", "city": "Austin", "address": "X", "zip": 12345, "state": "Texas"},
+    #    { "id": "1", "full_name": "Bianca Yuo", "city": "NYC", "address": "X", "zip": 12345, "state": "New York"},
+    #    { "id": "2", "full_name": "Caesar Xi", "city": "NYC", "address": "X", "zip": 12345, "state": "Texas"},
+    #    { "id": "3", "full_name": "Diana Wes", "city": "Utah", "address": "X", "zip": 12345, "state": "Utah"},
+    #]
+    return render(request, 'djangoapp/index.html', context)
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
@@ -115,20 +109,27 @@ def get_dealerships(request):
 # ...
 def get_dealer_details(request, dealer_id):
     context = {}
-    # get_dealer_reviews_from_cf
+    # Concat all dealer's short name
+    # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+    # Return a list of dealer short name
+    url = "https://us-east.functions.cloud.ibm.com/api/v1/namespaces/046716ff-e42a-4d60-a2f6-18db643765ba/actions/api/review?blocking=true"
+    dealerships = get_dealer_reviews_from_cf(url, dealer_id)
     context["dealer_id"] = dealer_id
-    context["review_list"] = [
-        { "id": "0", "sentiment": "positive", "car_make": "X", "car_model": "Y", "purchase_year": "Z", "content": "Line 1\nLine2\nLine 3"},
-        { "id": "1", "sentiment": "neutral", "car_make": "X", "car_model": "Y", "purchase_year": "Z", "content": "Line 1\nLine2\nLine 3"},
-        { "id": "2", "sentiment": "negative", "car_make": "X", "car_model": "Y", "purchase_year": "Z", "content": "Line 1\nLine2\nLine 3"},
-    ]
+    context["review_list"] = dealerships
+    # Gives a default list if error occurs
+    #context["dealer_id"] = dealer_id
+    #context["review_list"] = [
+    #    { "id": "0", "sentiment": "positive", "car_make": "X", "car_model": "Y", "purchase_year": "Z", "content": "Line 1\nLine2\nLine 3"},
+    #    { "id": "1", "sentiment": "neutral", "car_make": "X", "car_model": "Y", "purchase_year": "Z", "content": "Line 1\nLine2\nLine 3"},
+    #    { "id": "2", "sentiment": "negative", "car_make": "X", "car_model": "Y", "purchase_year": "Z", "content": "Line 1\nLine2\nLine 3"},
+    #]
     return render(request, 'djangoapp/dealer_details.html', context)
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
 def add_review(request, dealer_id):
-    if request.method == 'GET' or request.method == 'get':
+    if request.method == 'GET':
         context = {}
         # dealer = get_dealer_by_id()
         # cars = get_cars_by_dealer_id()
@@ -139,5 +140,5 @@ def add_review(request, dealer_id):
             { "id": "2", "name": "C123", "make": { "name": "Z123"}, "year": "2008"},
         ]
         return render(request, 'djangoapp/add_review.html', context)
-    if request.method == 'POST' or request.method == 'post':
+    if request.method == 'POST':
         pass  

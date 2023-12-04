@@ -34,7 +34,7 @@
         <form action="{% url 'djangoapp:add_review' dealer_id %}" method='post'>
             <h2>Add a Review:</h2>
             <label for="content"><b>Comments:</b></label>
-            <textarea class="form-control" id="content" name="content" rows="2" placeholder="Comments" required></textarea>
+            <textarea class="form-control" id="review" name="review" rows="2" placeholder="Comments" required></textarea>
             <label for="purchasecheck"><b>Did Purchase?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
             <br/>
@@ -49,6 +49,7 @@
             <br/>
             <label for="purchasedate"><b>Purchase Date:</b></label>
             <input class="date-own form-control" type="text" name="purchasedate" placeholder="mm/dd/yyyy" id="purchasedate">
+            <button class="btn btn-primary" type="submit">Add Review</button>
         </form>
     </body>
     <script type="text/javascript">
