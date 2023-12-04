@@ -19,8 +19,8 @@
     <!--Add a nav bar here -->
     <nav class="navbar navbar-light bg-light">
         <div class="container fluid">
-            <a class="btn btn-link" href="about">About</a>
-            <a class="btn btn-link" href="contact">Contact Us</a>
+            <a class="btn btn-link" href="/djangoapp/about">About</a>
+            <a class="btn btn-link" href="/djangoapp/contact">Contact Us</a>
             {% if user.is_authenticated %}
             <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
             <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>

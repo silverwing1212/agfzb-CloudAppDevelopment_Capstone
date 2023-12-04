@@ -13,8 +13,8 @@
     <body>
         <nav class="navbar navbar-light bg-light">
             <div class="container fluid">
-                <a class="btn btn-link" href="about">About</a>
-                <a class="btn btn-link" href="contact">Contact Us</a>
+                <a class="btn btn-link" href="/djangoapp/about">About</a>
+                <a class="btn btn-link" href="/djangoapp/contact">Contact Us</a>
                 {% if user.is_authenticated %}
                 <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
                 <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
@@ -32,14 +32,23 @@
         </nav>
     <!--Add review form here -->
         <form action="{% url 'djangoapp:add_review' dealer_id %}" method='post'>
-            <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+            <h2>Add a Review:</h2>
+            <label for="content"><b>Comments:</b></label>
+            <textarea class="form-control" id="content" name="content" rows="2" placeholder="Comments" required></textarea>
+            <label for="purchasecheck"><b>Did Purchase?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+            <br/>
+            <br/>
+            <label for="car"><b>Car:</b></label>
             <select name="car" id="car" class="form-select" required>
                 {% for car in cars %}
                     <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
                 {% endfor %}
             </select>
-            <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
+            <br/>
+            <br/>
+            <label for="purchasedate"><b>Purchase Date:</b></label>
+            <input class="date-own form-control" type="text" name="purchasedate" placeholder="mm/dd/yyyy" id="purchasedate">
         </form>
     </body>
     <script type="text/javascript">

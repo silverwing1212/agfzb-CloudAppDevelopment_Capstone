@@ -89,18 +89,24 @@ def registration_request(request):
 def get_dealerships(request):
     if request.method == "GET":
         context = {}
-        url = "your-cloud-function-domain/dealerships/dealer-get"
-        # Get dealers from the URL
-        dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         # Return a list of dealer short name
-        context["dealership_list"] = [
-            { "id": "0", "full_name": "Adam Zachary", "city": "Austin", "address": "X", "zip": 12345, "state": "Texas"},
-            { "id": "1", "full_name": "Bianca Yuo", "city": "NYC", "address": "X", "zip": 12345, "state": "New York"},
-            { "id": "2", "full_name": "Caesar Xi", "city": "NYC", "address": "X", "zip": 12345, "state": "Texas"},
-            { "id": "3", "full_name": "Diana Wes", "city": "Utah", "address": "X", "zip": 12345, "state": "Utah"},
-        ]
+        url = "https://us-east.functions.cloud.ibm.com/api/v1/namespaces/046716ff-e42a-4d60-a2f6-18db643765ba/actions/api/dealership?blocking=true"
+        dealerships = get_dealers_from_cf(url)
+        context["dealership_list"] = dealerships
+        try:
+            url = "https://us-east.functions.cloud.ibm.com/api/v1/namespaces/046716ff-e42a-4d60-a2f6-18db643765ba/actions/api/dealership?blocking=true"
+            dealerships = get_dealers_from_cf(url)
+            context["dealership_list"] = dealerships
+        except:
+            # Gives a default list if error occurs
+            context["dealership_list"] = [
+                { "id": "0", "full_name": "Adam Zachary", "city": "Austin", "address": "X", "zip": 12345, "state": "Texas"},
+                { "id": "1", "full_name": "Bianca Yuo", "city": "NYC", "address": "X", "zip": 12345, "state": "New York"},
+                { "id": "2", "full_name": "Caesar Xi", "city": "NYC", "address": "X", "zip": 12345, "state": "Texas"},
+                { "id": "3", "full_name": "Diana Wes", "city": "Utah", "address": "X", "zip": 12345, "state": "Utah"},
+            ]
         return render(request, 'djangoapp/index.html', context)
 
 
