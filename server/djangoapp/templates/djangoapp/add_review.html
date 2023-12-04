@@ -11,6 +11,40 @@
 
 </head>
     <body>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container fluid">
+                <a class="btn btn-link" href="about">About</a>
+                <a class="btn btn-link" href="contact">Contact Us</a>
+                {% if user.is_authenticated %}
+                <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                {% else %}
+                <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Username" name="username" >
+                    <input type="password" class="form-control" placeholder="Password" name="password" >
+                    <button class="btn btn-primary" type="submit">Login</button>
+                    <a class="btn btn-link" href="{% url 'djangoapp:signup' %}">Sign Up</a>
+                </form>
+                {% endif %}
+            </div>
+        </nav>
     <!--Add review form here -->
+        <form action="{% url 'djangoapp:add_review' dealer_id %}" method='post'>
+            <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+            <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+            <select name="car" id="car" class="form-select" required>
+                {% for car in cars %}
+                    <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+                {% endfor %}
+            </select>
+            <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
+        </form>
     </body>
+    <script type="text/javascript">
+        $('.date-own').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+    </script>
 </html>

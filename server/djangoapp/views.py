@@ -110,6 +110,7 @@ def get_dealerships(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     # get_dealer_reviews_from_cf
+    context["dealer_id"] = dealer_id
     context["review_list"] = [
         { "id": "0", "sentiment": "positive", "car_make": "X", "car_model": "Y", "purchase_year": "Z", "content": "Line 1\nLine2\nLine 3"},
         { "id": "1", "sentiment": "neutral", "car_make": "X", "car_model": "Y", "purchase_year": "Z", "content": "Line 1\nLine2\nLine 3"},
@@ -121,9 +122,16 @@ def get_dealer_details(request, dealer_id):
 # def add_review(request, dealer_id):
 # ...
 def add_review(request, dealer_id):
-    context = {}
-    # dealer = get_dealer_by_id()
-    # cars = get_cars_by_dealer_id()
-    
-    return render(request, 'djangoapp/add_review.html', context)
-
+    if request.method == 'GET' or request.method == 'get':
+        context = {}
+        # dealer = get_dealer_by_id()
+        # cars = get_cars_by_dealer_id()
+        context["dealer_id"] = dealer_id
+        context["cars"] = [
+            { "id": "0", "name": "A123", "make": { "name": "Z123"}, "year": "2005"},
+            { "id": "1", "name": "B123", "make": { "name": "Y123"}, "year": "2001"},
+            { "id": "2", "name": "C123", "make": { "name": "Z123"}, "year": "2008"},
+        ]
+        return render(request, 'djangoapp/add_review.html', context)
+    if request.method == 'POST' or request.method == 'post':
+        pass  
