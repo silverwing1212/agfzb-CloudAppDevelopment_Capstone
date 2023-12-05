@@ -11,6 +11,51 @@
 
 </head>
     <body>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container fluid">
+                <a class="btn btn-link" href="/djangoapp/about">About</a>
+                <a class="btn btn-link" href="/djangoapp/contact">Contact Us</a>
+                {% if user.is_authenticated %}
+                <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                {% else %}
+                <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Username" name="username" >
+                    <input type="password" class="form-control" placeholder="Password" name="password" >
+                    <button class="btn btn-primary" type="submit">Login</button>
+                    <a class="btn btn-link" href="{% url 'djangoapp:signup' %}">Sign Up</a>
+                </form>
+                {% endif %}
+            </div>
+        </nav>
     <!--Add review form here -->
+        <form action="{% url 'djangoapp:add_review' dealer_id %}" method='post'>
+            {% csrf_token %}
+            <h2>Add a Review:</h2>
+            <label for="content"><b>Comments:</b></label>
+            <textarea class="form-control" id="review" name="review" rows="2" placeholder="Comments" required></textarea>
+            <label for="purchasecheck"><b>Did Purchase?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+            <br/>
+            <br/>
+            <label for="car"><b>Car:</b></label>
+            <select name="car" id="car" class="form-select" required>
+                {% for car in cars %}
+                    <option selected value={{car.id}}>{{car.name}}-{{car.carMake.name}}-{{ car.year|date:"Y" }}</option>
+                {% endfor %}
+            </select>
+            <br/>
+            <br/>
+            <label for="purchasedate"><b>Purchase Date:</b></label>
+            <input class="date-own form-control" type="text" name="purchasedate" placeholder="mm/dd/yyyy" id="purchasedate">
+            <button class="btn btn-primary" type="submit">Add Review</button>
+        </form>
     </body>
+    <script type="text/javascript">
+        $('.date-own').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+    </script>
 </html>
