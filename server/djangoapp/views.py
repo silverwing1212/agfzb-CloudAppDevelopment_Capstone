@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
 # from .restapis import related methods
-from .restapis import get_dealer_reviews_from_cf, get_dealers_from_cf
+from .models import CarModel
+from .restapis import get_dealer_reviews_from_cf, get_dealers_from_cf, post_review_from_cf
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -113,9 +114,9 @@ def get_dealer_details(request, dealer_id):
     # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
     # Return a list of dealer short name
     url = "https://us-east.functions.cloud.ibm.com/api/v1/namespaces/046716ff-e42a-4d60-a2f6-18db643765ba/actions/api/review?blocking=true"
-    dealerships = get_dealer_reviews_from_cf(url, dealer_id)
+    reviews = get_dealer_reviews_from_cf(url, dealer_id)
     context["dealer_id"] = dealer_id
-    context["review_list"] = dealerships
+    context["review_list"] = reviews
     # Gives a default list if error occurs
     #context["dealer_id"] = dealer_id
     #context["review_list"] = [
@@ -133,12 +134,47 @@ def add_review(request, dealer_id):
         context = {}
         # dealer = get_dealer_by_id()
         # cars = get_cars_by_dealer_id()
+        cars = []
+        cars_res = CarModel.objects.filter(dealerId=dealer_id)
+        print("CAR_RES")
+        print(cars_res)
+        cars_first = CarModel.objects.filter(dealerId=dealer_id).first()
+        print("CAR_FIRST")
+        print(cars_first)
+        cars = cars_res
         context["dealer_id"] = dealer_id
-        context["cars"] = [
-            { "id": "0", "name": "A123", "make": { "name": "Z123"}, "year": "2005"},
-            { "id": "1", "name": "B123", "make": { "name": "Y123"}, "year": "2001"},
-            { "id": "2", "name": "C123", "make": { "name": "Z123"}, "year": "2008"},
-        ]
+        context["cars"] = cars
+        #context["cars"] = [
+        #    { "id": "0", "name": "A123", "make": { "name": "Z123"}, "year": "2005"},
+        #    { "id": "1", "name": "B123", "make": { "name": "Y123"}, "year": "2001"},
+        #    { "id": "2", "name": "C123", "make": { "name": "Z123"}, "year": "2008"},
+        #]
         return render(request, 'djangoapp/add_review.html', context)
     if request.method == 'POST':
-        pass  
+        review_obj = {}
+        review = request.POST['review']
+        purchased = request.POST['purchasecheck'] == 'on'
+        user = request.user
+        review_obj["name"] = user.first_name + ' ' + user.last_name
+        review_obj["review"] = review
+        review_obj["purchase"] = purchased
+        review_obj["dealership"] = dealer_id
+        if purchased:
+            car_id = request.POST['car']
+            purchasedate = request.POST['purchasedate']
+            car = CarModel.objects.filter(pk=car_id).get()
+            review_obj["car_make"] = car.carMake.name
+            review_obj["car_model"] = car.name
+            review_obj["car_year"] = car.year.strftime("%Y")
+            review_obj["'purchase_date': "] = purchasedate
+        print('REVIEW_OBJ')
+        print(review_obj)
+        print('AFTER_REVIEW_OBJ')
+        #return {}
+        url = "https://us-east.functions.cloud.ibm.com/api/v1/namespaces/046716ff-e42a-4d60-a2f6-18db643765ba/actions/api/review?blocking=true"
+        context = {}
+        context["dealer_id"] = dealer_id
+        post_review_from_cf(url, dealer_id, review_obj)
+        # Test
+        return redirect('djangoapp:index')
+

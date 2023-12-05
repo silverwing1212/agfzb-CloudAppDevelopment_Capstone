@@ -32,6 +32,7 @@
         </nav>
     <!--Add review form here -->
         <form action="{% url 'djangoapp:add_review' dealer_id %}" method='post'>
+            {% csrf_token %}
             <h2>Add a Review:</h2>
             <label for="content"><b>Comments:</b></label>
             <textarea class="form-control" id="review" name="review" rows="2" placeholder="Comments" required></textarea>
@@ -42,7 +43,7 @@
             <label for="car"><b>Car:</b></label>
             <select name="car" id="car" class="form-select" required>
                 {% for car in cars %}
-                    <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+                    <option selected value={{car.id}}>{{car.name}}-{{car.carMake.name}}-{{ car.year|date:"Y" }}</option>
                 {% endfor %}
             </select>
             <br/>

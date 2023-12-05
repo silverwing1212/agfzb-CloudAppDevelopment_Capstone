@@ -9,7 +9,7 @@ credentials = {
     "COUCH_URL": "https://3c366aa0-e65a-45df-b3a8-94d6d0482251-bluemix.cloudantnosqldb.appdomain.cloud"
 }
 
-iam_token = "eyJraWQiOiIyMDIzMTEwNzA4MzYiLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC02NjYwMDNNS0lFIiwiaWQiOiJJQk1pZC02NjYwMDNNS0lFIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiZjMyN2E2ZWMtOGQxMC00NWFiLWE0YTUtZGUzMzFiOTQxNWRkIiwiaWRlbnRpZmllciI6IjY2NjAwM01LSUUiLCJnaXZlbl9uYW1lIjoiS3lsZSIsImZhbWlseV9uYW1lIjoiSHVtcGhyZXkiLCJuYW1lIjoiS3lsZSBIdW1waHJleSIsImVtYWlsIjoia3lsZXVuaXZlcnNpdGllc0BnbWFpbC5jb20iLCJzdWIiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSIsImF1dGhuIjp7InN1YiI6Imt5bGV1bml2ZXJzaXRpZXNAZ21haWwuY29tIiwiaWFtX2lkIjoiSUJNaWQtNjY2MDAzTUtJRSIsIm5hbWUiOiJLeWxlIEh1bXBocmV5IiwiZ2l2ZW5fbmFtZSI6Ikt5bGUiLCJmYW1pbHlfbmFtZSI6Ikh1bXBocmV5IiwiZW1haWwiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSJ9LCJhY2NvdW50Ijp7InZhbGlkIjp0cnVlLCJic3MiOiJkZmU1NDFmMDMxZjA0YzhmYTU0OTU2ZjRlYWRmYmZjNiIsImltc191c2VyX2lkIjoiMTE1OTQ5NzYiLCJmcm96ZW4iOnRydWUsImltcyI6IjI3NjQxOTIifSwiaWF0IjoxNzAxNjk0NjI0LCJleHAiOjE3MDE2OTgyMjQsImlzcyI6Imh0dHBzOi8vaWFtLmNsb3VkLmlibS5jb20vaWRlbnRpdHkiLCJncmFudF90eXBlIjoidXJuOmlibTpwYXJhbXM6b2F1dGg6Z3JhbnQtdHlwZTphcGlrZXkiLCJzY29wZSI6ImlibSBvcGVuaWQiLCJjbGllbnRfaWQiOiJkZWZhdWx0IiwiYWNyIjoxLCJhbXIiOlsicHdkIl19.EM5BtmP6ear_lzxwC6k5P6BugBxmj6wJ1b6_OH-281hOBM889KmXk1pAi0x9JxOJxuymou3QnGnF8CfrDik4JMQrn4KVRxAlnWLsxow3IXBzIx4j95HslVhND_sDYUcg0PInM8KbhUo7nxjLd1oluqHbxcdwwxBAdx-GbZpBU0Xtdud08t9IswMdmOFXPweA52h9v3wa310tDP7c0wr5Cs06Y9BcKTmAfMO3df3G-3yv8mTTfkcPZsxby7YeMXMZz8TE93P1vlT60HwVv8rHNZg_9dq4qXgImOcDhuD1sIlZNaYbDePqbGI7L3XuFi9B7Qs_UTLStiSeuRxq7Nktmw"
+iam_token = "eyJraWQiOiIyMDIzMTEwNzA4MzYiLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC02NjYwMDNNS0lFIiwiaWQiOiJJQk1pZC02NjYwMDNNS0lFIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiMjg2MmVjNmQtZDFmNi00MzU3LTlmNzEtYmRlZDcwNjBmNmRmIiwiaWRlbnRpZmllciI6IjY2NjAwM01LSUUiLCJnaXZlbl9uYW1lIjoiS3lsZSIsImZhbWlseV9uYW1lIjoiSHVtcGhyZXkiLCJuYW1lIjoiS3lsZSBIdW1waHJleSIsImVtYWlsIjoia3lsZXVuaXZlcnNpdGllc0BnbWFpbC5jb20iLCJzdWIiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSIsImF1dGhuIjp7InN1YiI6Imt5bGV1bml2ZXJzaXRpZXNAZ21haWwuY29tIiwiaWFtX2lkIjoiSUJNaWQtNjY2MDAzTUtJRSIsIm5hbWUiOiJLeWxlIEh1bXBocmV5IiwiZ2l2ZW5fbmFtZSI6Ikt5bGUiLCJmYW1pbHlfbmFtZSI6Ikh1bXBocmV5IiwiZW1haWwiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSJ9LCJhY2NvdW50Ijp7InZhbGlkIjp0cnVlLCJic3MiOiJkZmU1NDFmMDMxZjA0YzhmYTU0OTU2ZjRlYWRmYmZjNiIsImltc191c2VyX2lkIjoiMTE1OTQ5NzYiLCJmcm96ZW4iOnRydWUsImltcyI6IjI3NjQxOTIifSwiaWF0IjoxNzAxNzUyNjIwLCJleHAiOjE3MDE3NTYyMjAsImlzcyI6Imh0dHBzOi8vaWFtLmNsb3VkLmlibS5jb20vaWRlbnRpdHkiLCJncmFudF90eXBlIjoidXJuOmlibTpwYXJhbXM6b2F1dGg6Z3JhbnQtdHlwZTphcGlrZXkiLCJzY29wZSI6ImlibSBvcGVuaWQiLCJjbGllbnRfaWQiOiJkZWZhdWx0IiwiYWNyIjoxLCJhbXIiOlsicHdkIl19.T3RiDjBxDOmZFtRL8uJUGdSfOww2XZoMx3U4jxePBuBCKLoXGzdEbNcjEmZr3X3WB4TY9xYg-hJ01GOdyJdNFHk1_X0Zg-42V2rWK7aPJeShfcmKSCotkpoHbrjkvHWiPmZZoheSaMU6Z-U3pdni1UTJDEGOUQDKSRf24qru2isx9gCnrw5HsRJFrHvvYLGP_S-x1DXBJfRCIeFo3q5TT29VYnVNb5Vxf1_MO8ccXLPK3XyVGuuxyAMOWSfPGxl3-dpKxRMV3wiCMi1CBSlNJRf1jD5YPZAAeaGbS9Q34x_oFfOK_P94v78Fn7Wsz6EHOve6_JHD_2ZAN5_dDKvxmA"
 authorization = "Bearer " + iam_token
 
 # Create a `get_request` to make HTTP GET requests
@@ -50,7 +50,11 @@ def post_request(url, json_payload, **kwargs):
 
 # Cloud Function
 def cloud_function(url, json_payload, **kwargs):
-    return post_request(url, json_payload)['response']['result']
+    cf_res = post_request(url, json_payload)
+    print('CF_RESULT')
+    print(cf_res)
+    print('AFTER_CF_RES')
+    return cf_res['response']['result']
 
 # Create a get_dealers_from_cf method to get dealers from a cloud function
 # def get_dealers_from_cf(url, **kwargs):
@@ -112,6 +116,25 @@ def get_dealer_reviews_from_cf(url, dealer_id):
     return results
 
 
+
+# Add Review Method
+def post_review_from_cf(url, dealer_id, review_obj):
+    results = []
+    # Call get_request with a URL parameter
+    payload = {
+        "IAM_API_KEY": credentials["IAM_API_KEY"],
+        "COUCH_URL": credentials["COUCH_URL"],
+        "dealerId": dealer_id,
+        "reviewObject": review_obj,
+        "method": "post"
+    }
+    json_result = cloud_function(url, payload)
+    print('POST_REVIEW_JSON_RESULT: ')
+    print(json_result)
+    print('AFTER_POST_REVIEW_JSON_RESULT: ')
+    return json_result
+
+
 # def get_dealer_by_id_from_cf(url, dealerId):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a DealerView object list
@@ -121,6 +144,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 # def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-
+def analyze_review_sentiments(text):
+    pass
 
 
