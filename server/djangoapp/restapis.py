@@ -3,14 +3,27 @@ import json
 # import related models here
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson.natural_language_understanding_v1 \
+    import Features, EmotionOptions
 
 credentials = {
     "IAM_API_KEY": "4iKJcQaT1ZJq6tbnwC4TZIqUwAoLz4UjLA7RBEm01OGN",
     "COUCH_URL": "https://3c366aa0-e65a-45df-b3a8-94d6d0482251-bluemix.cloudantnosqldb.appdomain.cloud"
 }
 
-iam_token = "eyJraWQiOiIyMDIzMTEwNzA4MzYiLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC02NjYwMDNNS0lFIiwiaWQiOiJJQk1pZC02NjYwMDNNS0lFIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiMjg2MmVjNmQtZDFmNi00MzU3LTlmNzEtYmRlZDcwNjBmNmRmIiwiaWRlbnRpZmllciI6IjY2NjAwM01LSUUiLCJnaXZlbl9uYW1lIjoiS3lsZSIsImZhbWlseV9uYW1lIjoiSHVtcGhyZXkiLCJuYW1lIjoiS3lsZSBIdW1waHJleSIsImVtYWlsIjoia3lsZXVuaXZlcnNpdGllc0BnbWFpbC5jb20iLCJzdWIiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSIsImF1dGhuIjp7InN1YiI6Imt5bGV1bml2ZXJzaXRpZXNAZ21haWwuY29tIiwiaWFtX2lkIjoiSUJNaWQtNjY2MDAzTUtJRSIsIm5hbWUiOiJLeWxlIEh1bXBocmV5IiwiZ2l2ZW5fbmFtZSI6Ikt5bGUiLCJmYW1pbHlfbmFtZSI6Ikh1bXBocmV5IiwiZW1haWwiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSJ9LCJhY2NvdW50Ijp7InZhbGlkIjp0cnVlLCJic3MiOiJkZmU1NDFmMDMxZjA0YzhmYTU0OTU2ZjRlYWRmYmZjNiIsImltc191c2VyX2lkIjoiMTE1OTQ5NzYiLCJmcm96ZW4iOnRydWUsImltcyI6IjI3NjQxOTIifSwiaWF0IjoxNzAxNzUyNjIwLCJleHAiOjE3MDE3NTYyMjAsImlzcyI6Imh0dHBzOi8vaWFtLmNsb3VkLmlibS5jb20vaWRlbnRpdHkiLCJncmFudF90eXBlIjoidXJuOmlibTpwYXJhbXM6b2F1dGg6Z3JhbnQtdHlwZTphcGlrZXkiLCJzY29wZSI6ImlibSBvcGVuaWQiLCJjbGllbnRfaWQiOiJkZWZhdWx0IiwiYWNyIjoxLCJhbXIiOlsicHdkIl19.T3RiDjBxDOmZFtRL8uJUGdSfOww2XZoMx3U4jxePBuBCKLoXGzdEbNcjEmZr3X3WB4TY9xYg-hJ01GOdyJdNFHk1_X0Zg-42V2rWK7aPJeShfcmKSCotkpoHbrjkvHWiPmZZoheSaMU6Z-U3pdni1UTJDEGOUQDKSRf24qru2isx9gCnrw5HsRJFrHvvYLGP_S-x1DXBJfRCIeFo3q5TT29VYnVNb5Vxf1_MO8ccXLPK3XyVGuuxyAMOWSfPGxl3-dpKxRMV3wiCMi1CBSlNJRf1jD5YPZAAeaGbS9Q34x_oFfOK_P94v78Fn7Wsz6EHOve6_JHD_2ZAN5_dDKvxmA"
+iam_token = "eyJraWQiOiIyMDIzMTEwNzA4MzYiLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC02NjYwMDNNS0lFIiwiaWQiOiJJQk1pZC02NjYwMDNNS0lFIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiOTE4ZDVkNjQtYzFhNi00ZjIzLWIyYzgtMGI4YTZiNTJlY2M1IiwiaWRlbnRpZmllciI6IjY2NjAwM01LSUUiLCJnaXZlbl9uYW1lIjoiS3lsZSIsImZhbWlseV9uYW1lIjoiSHVtcGhyZXkiLCJuYW1lIjoiS3lsZSBIdW1waHJleSIsImVtYWlsIjoia3lsZXVuaXZlcnNpdGllc0BnbWFpbC5jb20iLCJzdWIiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSIsImF1dGhuIjp7InN1YiI6Imt5bGV1bml2ZXJzaXRpZXNAZ21haWwuY29tIiwiaWFtX2lkIjoiSUJNaWQtNjY2MDAzTUtJRSIsIm5hbWUiOiJLeWxlIEh1bXBocmV5IiwiZ2l2ZW5fbmFtZSI6Ikt5bGUiLCJmYW1pbHlfbmFtZSI6Ikh1bXBocmV5IiwiZW1haWwiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSJ9LCJhY2NvdW50Ijp7InZhbGlkIjp0cnVlLCJic3MiOiJkZmU1NDFmMDMxZjA0YzhmYTU0OTU2ZjRlYWRmYmZjNiIsImltc191c2VyX2lkIjoiMTE1OTQ5NzYiLCJmcm96ZW4iOnRydWUsImltcyI6IjI3NjQxOTIifSwiaWF0IjoxNzAxNzU2MzkzLCJleHAiOjE3MDE3NTk5OTMsImlzcyI6Imh0dHBzOi8vaWFtLmNsb3VkLmlibS5jb20vaWRlbnRpdHkiLCJncmFudF90eXBlIjoidXJuOmlibTpwYXJhbXM6b2F1dGg6Z3JhbnQtdHlwZTphcGlrZXkiLCJzY29wZSI6ImlibSBvcGVuaWQiLCJjbGllbnRfaWQiOiJkZWZhdWx0IiwiYWNyIjoxLCJhbXIiOlsicHdkIl19.TaUN8zCgkl1orwIl1Bs7vPgrrKOKqnZ_ZDlnWOvmv5D-ptzHjLv5xN9jl_RYbVB2sGKfw6WKKIjZ4U1Oo0ndCuMsFWAlYBj0IGprbCelGCFmHUmqLKkFbBlxpLBebAKTSkVBsIQKfRt5IxxvHybhQkm2AH1xfTBLn-cCaDLGKSNFNyhj5vxNMTim23b7sQIBiiV4Ntecw0DlSyZKr7q_6gJ6R8d6W464goz98EnqxMFMof0T8aJV76b4lG8SVMv5ZlUG58QbX2QJE71wdcvTaM3Tz-QdVT4gbLDInDPoqzu6hfJilcN0zg-lRLQCpxqsjfN5_XK7nwDc4nWHmvSvMw"
 authorization = "Bearer " + iam_token
+
+authenticator = IAMAuthenticator('8yslbBpV3Cvitwv3cWl_DXpImlQ8KohHCRfBekRjS8pU')
+natural_language_understanding = NaturalLanguageUnderstandingV1( \
+    version='2022-04-07', \
+    authenticator=authenticator \
+)
+# Test
+
+natural_language_understanding.set_service_url('https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/2b0fa95e-f0aa-4d1c-beec-d8387c619dca')
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
@@ -145,6 +158,14 @@ def post_review_from_cf(url, dealer_id, review_obj):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
 def analyze_review_sentiments(text):
-    pass
-
-
+    response = natural_language_understanding.analyze( \
+        html="<html><head><title>Review</title></head><body><h1>Review</h1><p>review: " + text + "</p></body></html>", \
+        features=Features(emotion=EmotionOptions(targets=['review']))).get_result()
+    print("NLU_RESPONSE")
+    print(response)
+    emotion_obj = response["emotion"]["document"]["emotion"]
+    if emotion_obj["joy"] > 0.50:
+        return "positive"
+    if emotion_obj["fear"] > 0.30 or emotion_obj["anger"] > 0.30 or emotion_obj["disgust"] > 0.30 or emotion_obj["sadness"] > 0.30:
+        return "negative"
+    return "neutral"

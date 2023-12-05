@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
 # from .restapis import related methods
 from .models import CarModel
-from .restapis import get_dealer_reviews_from_cf, get_dealers_from_cf, post_review_from_cf
+from .restapis import get_dealer_reviews_from_cf, get_dealers_from_cf, post_review_from_cf, analyze_review_sentiments
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -110,11 +110,16 @@ def get_dealerships(request):
 # ...
 def get_dealer_details(request, dealer_id):
     context = {}
+    # Test
     # Concat all dealer's short name
     # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
     # Return a list of dealer short name
     url = "https://us-east.functions.cloud.ibm.com/api/v1/namespaces/046716ff-e42a-4d60-a2f6-18db643765ba/actions/api/review?blocking=true"
     reviews = get_dealer_reviews_from_cf(url, dealer_id)
+    for review in reviews:
+        review_text = review.review
+        sentiment = analyze_review_sentiments(review_text)
+        review.sentiment = sentiment
     context["dealer_id"] = dealer_id
     context["review_list"] = reviews
     # Gives a default list if error occurs
