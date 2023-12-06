@@ -1,6 +1,5 @@
 import requests
 import json
-# import related models here
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 from ibm_watson import NaturalLanguageUnderstandingV1
@@ -8,22 +7,20 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson.natural_language_understanding_v1 \
     import Features, EmotionOptions
 
+# Credentials for Couch IBM Access
 credentials = {
     "IAM_API_KEY": "4iKJcQaT1ZJq6tbnwC4TZIqUwAoLz4UjLA7RBEm01OGN",
     "COUCH_URL": "https://3c366aa0-e65a-45df-b3a8-94d6d0482251-bluemix.cloudantnosqldb.appdomain.cloud"
 }
 
-#iam_token = "eyJraWQiOiIyMDIzMTEwNzA4MzYiLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC02NjYwMDNNS0lFIiwiaWQiOiJJQk1pZC02NjYwMDNNS0lFIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiZmNlYzFhY2UtNjFlMy00NzFmLTk2NTMtMjE2ODk1ZGUyMGI4IiwiaWRlbnRpZmllciI6IjY2NjAwM01LSUUiLCJnaXZlbl9uYW1lIjoiS3lsZSIsImZhbWlseV9uYW1lIjoiSHVtcGhyZXkiLCJuYW1lIjoiS3lsZSBIdW1waHJleSIsImVtYWlsIjoia3lsZXVuaXZlcnNpdGllc0BnbWFpbC5jb20iLCJzdWIiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSIsImF1dGhuIjp7InN1YiI6Imt5bGV1bml2ZXJzaXRpZXNAZ21haWwuY29tIiwiaWFtX2lkIjoiSUJNaWQtNjY2MDAzTUtJRSIsIm5hbWUiOiJLeWxlIEh1bXBocmV5IiwiZ2l2ZW5fbmFtZSI6Ikt5bGUiLCJmYW1pbHlfbmFtZSI6Ikh1bXBocmV5IiwiZW1haWwiOiJreWxldW5pdmVyc2l0aWVzQGdtYWlsLmNvbSJ9LCJhY2NvdW50Ijp7InZhbGlkIjp0cnVlLCJic3MiOiJkZmU1NDFmMDMxZjA0YzhmYTU0OTU2ZjRlYWRmYmZjNiIsImltc191c2VyX2lkIjoiMTE1OTQ5NzYiLCJmcm96ZW4iOnRydWUsImltcyI6IjI3NjQxOTIifSwiaWF0IjoxNzAxNzYwNzM4LCJleHAiOjE3MDE3NjQzMzgsImlzcyI6Imh0dHBzOi8vaWFtLmNsb3VkLmlibS5jb20vaWRlbnRpdHkiLCJncmFudF90eXBlIjoidXJuOmlibTpwYXJhbXM6b2F1dGg6Z3JhbnQtdHlwZTphcGlrZXkiLCJzY29wZSI6ImlibSBvcGVuaWQiLCJjbGllbnRfaWQiOiJkZWZhdWx0IiwiYWNyIjoxLCJhbXIiOlsicHdkIl19.jx051qqfTB1sINhlBuVv2Z85rhv-P7raLRss_ggJegIXkEm7vOQt-mr3d036Xvj77odY7I8B1IBB-YR-c3KgLC7iTZQT-JX43quQGVlvY7k1lMuJxSOa_c_38x8xTXl6Hr_l8n2qkRl3QDjmsHA0hx0d9eGmhKObGqoEMS8RmbMqE0aGTvibLCLerYklp9ETMjkMmYXQW4sYUR0elWwYBzKqPDV9-_Ojmi2Ywx2y_FuY5Gyjch-dfCTnZvMLBSwRmJGjudkFG1DFMDzepWy1qnBFfeCDnRZZMyRgqQBOHh7WH7V9s2JFkTDfEDyNE5V_f0D793c2cZLixXyaAm0XHA"
-#authorization = "Bearer " + iam_token
-
+# Setup for Accessing NLU Service
 authenticator = IAMAuthenticator('8yslbBpV3Cvitwv3cWl_DXpImlQ8KohHCRfBekRjS8pU')
 natural_language_understanding = NaturalLanguageUnderstandingV1( \
     version='2022-04-07', \
     authenticator=authenticator \
 )
-# Test
-
 natural_language_understanding.set_service_url('https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/2b0fa95e-f0aa-4d1c-beec-d8387c619dca')
+
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
@@ -154,12 +151,6 @@ def post_review_from_cf(url, dealer_id, review_obj):
     print(json_result)
     print('AFTER_POST_REVIEW_JSON_RESULT: ')
     return json_result
-
-
-# def get_dealer_by_id_from_cf(url, dealerId):
-# - Call get_request() with specified arguments
-# - Parse JSON results into a DealerView object list
-
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
 # def analyze_review_sentiments(text):

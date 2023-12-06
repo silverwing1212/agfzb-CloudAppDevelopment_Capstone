@@ -2,11 +2,7 @@ from django.contrib import admin
 from .models import CarModel, CarMake
 # from .models import related models
 
-
-# Register your models here.
-
 # CarModelInline class
-
 class CarModelInline(admin.TabularInline):
     model = CarModel
     # extra = 10
